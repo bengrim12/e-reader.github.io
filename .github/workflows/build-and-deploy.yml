@@ -11,6 +11,8 @@ on:
     paths:
       - 'input.har'
       - 'scripts/**'
+permissions:
+  contents: write
 
 jobs:
   build-and-deploy:
