@@ -44,14 +44,6 @@
       "not dead",
       "not op_mini all"
     ],
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
-    "type": "module",
-    "bugs": {
-      "url": "https://github.com/bengrim12/e-reader.github.io/issues"
-    },
-    "homepage": "https://github.com/bengrim12/e-reader.github.io#readme",
     "development": [
       "last 1 chrome version",
       "last 1 firefox version",

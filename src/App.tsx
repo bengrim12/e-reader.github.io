@@ -7,7 +7,7 @@ function App() {
   const [state, setState] = useState([]);
 
   useEffect(() => {
-    fetch('/output_segments/info.json')
+    fetch('/images/image_8.jpeg')
     //fetch('/mgs-52/info.json')
       .then(res => res.json())
       .then(data => setState(data));
