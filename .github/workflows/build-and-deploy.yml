@@ -1,5 +1,11 @@
 name: Build & Deploy E-Reader
 on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment'
+        required: true
+        default: 'staging'
   push:
     branches: [main]
     paths:
