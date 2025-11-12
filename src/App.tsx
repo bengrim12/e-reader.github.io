@@ -7,7 +7,7 @@ function App() {
   const [state, setState] = useState([]);
 
   useEffect(() => {
-    fetch('/e-reader.github.io/images/image_8.jpeg')
+    fetch('/e-reader.github.io/images/info.json')
       //   "homepage": "https://bengrim12.github.io/e-reader.github.io",https://bengrim12.github.io/images/image_8.jpeg
     //fetch('/mgs-52/info.json')
       .then(res => res.json())

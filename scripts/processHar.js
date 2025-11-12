@@ -4,11 +4,13 @@ import sharp from "sharp";
 
 const inputHar = "./input.har";
 const outputDir = "./public/images";
+const staticUrl = '/e-reader.github.io/images';
 
 async function main() {
   const har = JSON.parse(fs.readFileSync(inputHar, "utf8"));
   if (!fs.existsSync(outputDir)) fs.mkdirSync(outputDir, { recursive: true });
 
+  const staticFiles = [];
   let count = 0;
   for (const entry of har.log.entries) {
     const { response } = entry;
@@ -18,7 +20,9 @@ async function main() {
     const base64 = content.text;
     const buffer = Buffer.from(base64, "base64");
     const ext = content.mimeType.split("/")[1];
-    const outPath = path.join(outputDir, `image_${count}.${ext}`);
+    const filePath = `image_${count}.${ext}`;
+    const outPath = path.join(outputDir, filePath);
+    staticFiles.push(path.join(staticUrl, filePath));
 
     if (ext === 'svg+xml') {
         continue; // ignore unsupportet format
@@ -31,6 +35,8 @@ async function main() {
       .toFile(outPath);
     count++;
   }
+
+  fs.writeFileSync(path.join(outputDir, 'info.json'), JSON.stringify(staticFiles), 'utf8');
 
   console.log(`Fertig: ${count} Bilder verarbeitet.`);
 }
