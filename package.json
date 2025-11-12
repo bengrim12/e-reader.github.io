@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
-    "detect-libc": "^2.1.2",
-    "semver": "^7.7.3",
-    "sharp": "^0.34.5",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.0",
@@ -15,11 +12,15 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@use-gesture/react": "^10.3.1",
+    "detect-libc": "^2.1.2",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-scripts": "5.0.1",
+    "semver": "^7.7.3",
+    "sharp": "^0.34.5",
     "typescript": "^4.9.5",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yaml": "^2.8.1"
   },
   "scripts": {
     "start": "react-scripts start",
