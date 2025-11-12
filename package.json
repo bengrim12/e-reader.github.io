@@ -28,6 +28,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "homepage": "https://bengrim12.github.io/e-reader.github.io",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bengrim12/e-reader.github.io.git"
