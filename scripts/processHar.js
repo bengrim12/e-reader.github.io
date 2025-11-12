@@ -20,11 +20,15 @@ async function main() {
     const ext = content.mimeType.split("/")[1];
     const outPath = path.join(outputDir, `image_${count}.${ext}`);
 
+    if (ext === 'svg+xml') {
+        continue; // ignore unsupportet format
+    }
+
+    console.log(`→ ${outPath}`);
+
     await sharp(buffer)
       .resize({ width: 1200, withoutEnlargement: true })
       .toFile(outPath);
-
-    console.log(`→ ${outPath}`);
     count++;
   }
 
