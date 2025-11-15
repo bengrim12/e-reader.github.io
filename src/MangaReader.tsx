@@ -149,6 +149,7 @@ function Page({src, scale}: { src: string; scale: number }) {
         // border: '1px solid orange',
         userSelect: 'none',
         pointerEvents: 'none',
+        maxWidth: '100vw',
       }}
       draggable={false}
     />
