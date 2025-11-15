@@ -19,7 +19,7 @@ export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
 
   // todo: fix scale
-  // @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const bind = useGesture({
     onDrag: ({delta: [dx], buttons}) => {
       if (buttons === 1) {
@@ -59,9 +59,9 @@ export default function MangaReader({images}: { images: ReadingState }) {
   );
 }
 
-function Page({ src, scale }: { src: string; scale: number }) {
+function Page({src, scale}: { src: string; scale: number }) {
   const ref = useRef<HTMLImageElement | null>(null);
-  const [dimension, setDimension] = useState({ w: 0, h: 0 });
+  const [dimension, setDimension] = useState({w: 0, h: 0});
 
   const computeAndSet = useCallback((img: HTMLImageElement) => {
     const naturalWidth = img.naturalWidth;
@@ -92,7 +92,7 @@ function Page({ src, scale }: { src: string; scale: number }) {
     }
 
     // runde auf ganze Pixel, um seltsame Browser-Rundungen zu vermeiden
-    setDimension({ w: Math.round(w), h: Math.round(h) });
+    setDimension({w: Math.round(w), h: Math.round(h)});
     return true;
   }, []);
 
