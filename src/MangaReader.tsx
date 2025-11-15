@@ -17,7 +17,7 @@ export interface ReadingState {
 
 export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
-  const [stories, setStories] = useState<string[]>(Object.keys(images));
+  const [stories] = useState<string[]>(Object.keys(images));
   const [activeStory, setActiveStory] = useState<string>(Object.keys(images)[0]);
 
   // todo: fix scale
