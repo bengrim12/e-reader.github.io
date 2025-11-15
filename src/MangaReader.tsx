@@ -41,7 +41,11 @@ export default function MangaReader({images}: { images: ReadingState }) {
                 <Fragment key={story + chapter}>
                   <h3>{chapter}</h3>
                   {imagePaths.map((src) =>
-                    <Page src={story + chapter + src} key={src} scale={scale}/>
+                    <Page
+                      key={story + chapter + src}
+                      src={src}
+                      scale={scale}
+                    />
                   )}
                 </Fragment>
               )
