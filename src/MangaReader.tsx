@@ -18,6 +18,7 @@ export interface ReadingState {
 export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
 
+  // todo: fix scale
   const bind = useGesture({
     onDrag: ({delta: [dx], buttons}) => {
       if (buttons === 1) {
@@ -28,7 +29,7 @@ export default function MangaReader({images}: { images: ReadingState }) {
   });
 
   return (
-    <div {...bind()} style={{
+    <div style={{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
@@ -144,7 +145,7 @@ function Page({ src, scale }: { src: string; scale: number }) {
       style={{
         width: widthPx,
         height: heightPx,
-        border: '1px solid orange',
+        // border: '1px solid orange',
         userSelect: 'none',
         pointerEvents: 'none',
       }}
