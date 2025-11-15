@@ -17,13 +17,13 @@ export interface ReadingState {
 
 export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
-  const [stories, setStories] = useState<string[]>([]);
-  const [activeStory, setActiveStory] = useState<string>('');
+  const [stories, setStories] = useState<string[]>(Object.keys(images));
+  const [activeStory, setActiveStory] = useState<string>(Object.keys(images)[0]);
 
-  useEffect(() => {
-    setStories(Object.keys(images));
-    setActiveStory(Object.keys(images)[0])
-  }, [images]);
+  // useEffect(() => {
+  //   setStories(Object.keys(images));
+  //   setActiveStory(Object.keys(images)[0])
+  // }, [images]);
 
   // todo: fix scale
   const bind = useGesture({
@@ -36,9 +36,9 @@ export default function MangaReader({images}: { images: ReadingState }) {
   });
   console.log(bind);
 
-  if (activeStory === '') {
-    return null;
-  }
+  // if (activeStory === '') {
+  //   return null;
+  // }
 
   return (
     <div style={{
