@@ -19,7 +19,6 @@ export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
 
   // todo: fix scale
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const bind = useGesture({
     onDrag: ({delta: [dx], buttons}) => {
       if (buttons === 1) {
@@ -28,6 +27,7 @@ export default function MangaReader({images}: { images: ReadingState }) {
     },
     onDoubleClick: () => setScale(1),
   });
+  console.log(bind);
 
   return (
     <div style={{
