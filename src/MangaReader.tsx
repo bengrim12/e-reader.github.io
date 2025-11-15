@@ -17,6 +17,13 @@ export interface ReadingState {
 
 export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
+  const [stories, setStories] = useState<string[]>([]);
+  const [activeStory, setActiveStory] = useState<string>('');
+
+  useEffect(() => {
+    setStories(Object.keys(images));
+    setActiveStory(Object.keys(images)[0])
+  }, [images]);
 
   // todo: fix scale
   const bind = useGesture({
@@ -35,22 +42,22 @@ export default function MangaReader({images}: { images: ReadingState }) {
       flexDirection: "column",
       alignItems: "center",
     }}>
-      {Object.entries(images).map(([story, chapterObj]) => (
-          <Fragment key={story}>
-            <h1>{story}</h1>
-            {Object.entries(chapterObj).map(([chapter, imagePaths]) =>
-              (
-                <Fragment key={story + chapter}>
-                  <h3>{chapter}</h3>
-                  {imagePaths.map((src) =>
-                    <Page
-                      key={story + chapter + src}
-                      src={src}
-                      scale={scale}
-                    />
-                  )}
-                </Fragment>
-              )
+      <select id="auswahl" name="auswahl">
+        {stories.map(story => (
+          <option onSelect={() => setActiveStory(story)} value={story} key={story}>{story}</option>
+        ))}
+      </select>
+      <h1>{activeStory}</h1>
+      {Object.entries(images[activeStory]).map(([chapter, imagePaths]) =>
+        (
+          <Fragment key={activeStory + chapter}>
+            <h3>{chapter}</h3>
+            {imagePaths.map((src) =>
+              <Page
+                key={activeStory + chapter + src}
+                src={src}
+                scale={scale}
+              />
             )}
           </Fragment>
         )
