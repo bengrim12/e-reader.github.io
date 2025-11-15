@@ -17,7 +17,6 @@ export interface ReadingState {
 
 export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
-  const [stories] = useState<string[]>(Object.keys(images));
   const [activeStory, setActiveStory] = useState<string>(Object.keys(images)[0]);
 
   // todo: fix scale
@@ -38,7 +37,7 @@ export default function MangaReader({images}: { images: ReadingState }) {
       alignItems: "center",
     }}>
       <select id="Story" name="Story" onChange={(e) => setActiveStory(e.target.value)}>
-        {stories.map(story => (
+        {Object.keys(images).map(story => (
           <option value={story} key={story}>{story}</option>
         ))}
       </select>
