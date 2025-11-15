@@ -17,7 +17,7 @@ export interface ReadingState {
 
 export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
-  const [activeStory, setActiveStory] = useState<string>(Object.keys(images)[0]);
+  const [activeStory, setActiveStory] = useState<string>('only select if you\'re 18+');
 
   // todo: fix scale
   const bind = useGesture({
@@ -29,6 +29,22 @@ export default function MangaReader({images}: { images: ReadingState }) {
     onDoubleClick: () => setScale(1),
   });
   console.log(bind);
+
+  if (!activeStory) {
+    return (
+      <div style={{
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}>
+        <select id="Story" name="Story" onChange={(e) => setActiveStory(e.target.value)}>
+          {Object.keys(images).map(story => (
+            <option value={story} key={story}>{story}</option>
+          ))}
+        </select>
+      </div>
+    );
+  }
 
   return (
     <div style={{
