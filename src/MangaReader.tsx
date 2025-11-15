@@ -30,7 +30,7 @@ export default function MangaReader({images}: { images: ReadingState }) {
   });
   console.log(bind);
 
-  if (!activeStory) {
+  if (!images[activeStory]) {
     return (
       <div style={{
         display: "flex",
