@@ -10,37 +10,14 @@ jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout main branch
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # holt vollständige Historie
-
-      - name: Checkout existing gh-pages branch (if exists)
-        run: |
-          git fetch origin gh-pages || true
-          if git show-ref --verify --quiet refs/remotes/origin/gh-pages; then
-            git checkout gh-pages -- public/images || true
-          fi
-
-      - name: Install Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
-
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Process HAR file
-        run: node scripts/processHar.js
-
-      - name: Build React app
-        run: npm run build
-
-      - name: Copy images to build folder
-        run: mkdir -p build/images && cp -r public/images/* build/images/
-
-      - name: Deploy to gh-pages
-        uses: peaceiris/actions-gh-pages@v4
+      - run: npm ci
+      - run: node scripts/processHar.js
+      - run: npm run build
+      - uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
