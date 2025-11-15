@@ -4,7 +4,7 @@ import MangaReader, {ReadingState} from "./MangaReader";
 
 
 function App() {
-  const [state, setState] = useState<ReadingState>({});
+  const [state, setState] = useState<ReadingState>();
 
   useEffect(() => {
     fetch('/e-reader.github.io/images/info.json')
@@ -13,6 +13,10 @@ function App() {
       .then(res => res.json())
       .then(data => setState(data));
   }, []);
+
+  if (!state) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <MangaReader images={state}/>

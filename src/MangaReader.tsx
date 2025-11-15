@@ -20,11 +20,6 @@ export default function MangaReader({images}: { images: ReadingState }) {
   const [stories, setStories] = useState<string[]>(Object.keys(images));
   const [activeStory, setActiveStory] = useState<string>(Object.keys(images)[0]);
 
-  // useEffect(() => {
-  //   setStories(Object.keys(images));
-  //   setActiveStory(Object.keys(images)[0])
-  // }, [images]);
-
   // todo: fix scale
   const bind = useGesture({
     onDrag: ({delta: [dx], buttons}) => {
@@ -36,19 +31,15 @@ export default function MangaReader({images}: { images: ReadingState }) {
   });
   console.log(bind);
 
-  // if (activeStory === '') {
-  //   return null;
-  // }
-
   return (
     <div style={{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
     }}>
-      <select id="Story" name="Story">
+      <select id="Story" name="Story" onChange={(e) => setActiveStory(e.target.value)}>
         {stories.map(story => (
-          <option onSelect={() => setActiveStory(story)} value={story} key={story}>{story}</option>
+          <option value={story} key={story}>{story}</option>
         ))}
       </select>
       <h1>{activeStory}</h1>
