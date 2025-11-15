@@ -48,21 +48,24 @@ const WebtoonXYZMapper = {
 const NHentaiMapper = {
     filter(e) {
         return (
-            e.response.content.mimeType === 'image/webp' &&
-            !!e.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+).webp)$")
+            (e.response.content.mimeType === 'image/webp' ||
+                e.response.content.mimeType === 'image/jpeg') &&
+            !!e.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+)\\..*)$")
         )
         // return !!e.request.url.match("webtoon.xyz/manga_.*/((\\d+)\\.jpg)$");
     },
     sort(e1, e2) {
         return (
-            Number(e1.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+).webp)$")[2]) -
-            Number(e2.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+).webp)$")[2])
+            Number(e1.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+)\\..*)$")[2]) -
+            Number(e2.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+)\\..*)$")[2])
         );
     },
-    resolveChapter(EXPORT_DIR, _, e) {
-        const [__, title, ___, storyPage] = e.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+).webp)$");
+    resolveChapter(EXPORT_DIR, page, e) {
+        const title = page.title.match("nhentai.net/g/(\\d+)/")[1];
+        const storyPage = e.request.url.match("nhentai.net/galleries/(\\d+)/((\\d+)\\..*)$")[3];
 
         const outDir = `${EXPORT_DIR}/${title}/000`; // out/567649/000
+        console.log(`creating directory ${outDir}`);
         if (!fs.existsSync(outDir)) {
             console.log(`creating directory ${outDir}`);
             fs.mkdirSync(outDir, {recursive: true});
@@ -78,6 +81,7 @@ async function main() {
     console.log("Har files found: ", harFiles);
 
     for (const har of harFiles) {
+        console.log(`processing ${har.log.pages[0].title}`);
         const mapper = MapperFactoryImpl.get(har);
 
         const pageMap = har.log.pages.reduce((obj, page) => Object.assign(obj, {[page.id]: page}), {});
@@ -134,6 +138,10 @@ async function walk(current, dirPath, files) {
             await walk(full, dirPath, files);
         } else if (ent.isFile() || ent.isSymbolicLink()) {
             const [story, chapter, fileName] = path.relative(dirPath, full).split(path.sep);
+
+            if (story === 'info.json') {
+                continue;
+            }
 
             if (!files[story]) {
                 files[story] = {};
