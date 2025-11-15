@@ -36,13 +36,17 @@ export default function MangaReader({images}: { images: ReadingState }) {
   });
   console.log(bind);
 
+  if (activeStory === '') {
+    return null;
+  }
+
   return (
     <div style={{
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
     }}>
-      <select id="auswahl" name="auswahl">
+      <select id="Story" name="Story">
         {stories.map(story => (
           <option onSelect={() => setActiveStory(story)} value={story} key={story}>{story}</option>
         ))}
