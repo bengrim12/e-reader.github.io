@@ -1,10 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import MangaReader from "./MangaReader";
+import MangaReader, {ReadingState} from "./MangaReader";
 
 
 function App() {
-  const [state, setState] = useState([]);
+  const [state, setState] = useState<ReadingState>({});
 
   useEffect(() => {
     fetch('/e-reader.github.io/images/info.json')

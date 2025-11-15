@@ -1,9 +1,21 @@
-import {useEffect, useRef, useState} from "react";
+import {Fragment, useEffect, useRef, useState} from "react";
 import {useGesture} from "@use-gesture/react";
 
 const clamp = (v: number, min: number, max: number): number => Math.min(Math.max(v, min), max);
 
-export default function MangaReader({images}: { images: string[] }) {
+export interface ReadingState {
+  [story: string]: {
+    [chapter: string]: string[];
+  };
+}
+
+/*
+  "3311475": {
+    "000": [
+      "/e-reader.github.io/images/3311475/000/001-000.jpg",
+ */
+
+export default function MangaReader({images}: { images: ReadingState }) {
   const [scale, setScale] = useState<number>(1);
 
   const bind = useGesture({
@@ -21,9 +33,22 @@ export default function MangaReader({images}: { images: string[] }) {
       flexDirection: "column",
       alignItems: "center",
     }}>
-      {images.map((src) => (
-        <Page src={src} key={src} scale={scale}/>
-      ))}
+      {Object.entries(images).map(([story, chapterObj]) => (
+          <Fragment key={story}>
+            <h1>{story}</h1>
+            {Object.entries(chapterObj).map(([chapter, imagePaths]) =>
+              (
+                <Fragment key={story + chapter}>
+                  <h3>{chapter}</h3>
+                  {imagePaths.map((src) =>
+                    <Page src={story + chapter + src} key={src} scale={scale}/>
+                  )}
+                </Fragment>
+              )
+            )}
+          </Fragment>
+        )
+      )}
     </div>
   );
 }
@@ -49,11 +74,11 @@ function Page({src, scale}: { src: string; scale: number }) {
       if (innerWidth > window.innerWidth) {
         const newState = {w: naturalWidth, h: naturalHeight};
         setDimension(newState)
-      } else if(innerWidth > naturalWidth) {
+      } else if (innerWidth > naturalWidth) {
         const multiplier = naturalWidth / innerWidth;
         const newState = {w: naturalWidth, h: window.innerHeight * multiplier};
         setDimension(newState)
-      } else if(innerWidth < minWidth) {
+      } else if (innerWidth < minWidth) {
         const multiplier = minWidth / innerWidth;
         const newState = {w: minWidth, h: window.innerHeight * multiplier};
         setDimension(newState)
