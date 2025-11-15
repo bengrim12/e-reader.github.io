@@ -92,6 +92,11 @@ function Page({src, scale}: { src: string; scale: number }) {
       h = window.innerHeight;
     }
 
+    if (w > window.innerWidth) {
+      h = (window.innerWidth / w) * h; //
+      w = window.innerWidth;
+    }
+
     // runde auf ganze Pixel, um seltsame Browser-Rundungen zu vermeiden
     setDimension({w: Math.round(w), h: Math.round(h)});
     return true;
@@ -150,7 +155,7 @@ function Page({src, scale}: { src: string; scale: number }) {
         // border: '1px solid orange',
         userSelect: 'none',
         pointerEvents: 'none',
-        maxWidth: '100vw',
+        //maxWidth: '100vw',
       }}
       draggable={false}
     />
